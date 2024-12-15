@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"time"
 
-	tele ""
+	 tele "gopkg.in/telebot.v4"
 )
 
 func main() {
@@ -21,8 +21,8 @@ func main() {
 	}
 
 	b.Handle("/start", func(c tele.Context) error {
-		_, _ = c.Send("Hello user!") // Ignore response from Send method to avoid errors if there's no connection to Telegram
-		return nil
+		  // Ignore response from Send method to avoid errors if there's no connection to Telegram
+		return  c.Send("Hello user!")
 	})
 
 	b.Start()
