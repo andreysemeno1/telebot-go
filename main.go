@@ -16,7 +16,7 @@ func main() {
 	}
 
 	b.Handle("/start", func(c tele.Context) error {
-		return c.Send("Hello user!")package main
+		return c.Send("Hello user!")
 
 import (
 	"time"
