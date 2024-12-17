@@ -5,9 +5,10 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
-	 tele "gopkg.in/telebot.v4"
+	tele "gopkg.in/telebot.v4"
 )
 
 func main() {
@@ -21,8 +22,8 @@ func main() {
 	}
 
 	b.Handle("/start", func(c tele.Context) error {
-		  // Ignore response from Send method to avoid errors if there's no connection to Telegram
-		return  c.Send("Hello user!")
+		// Ignore response from Send method to avoid errors if there's no connection to Telegram
+		return c.Send("Hello user!")
 	})
 
 	b.Start()
@@ -30,17 +31,14 @@ func main() {
 	b.Handle("/stop", func(c tele.Context) error {
 		err := c.Send(b.Close())
 		if err != nil {
-			fmt.Println("Error sending /stop message:", err)
+			b.Close()
 		}
 		return nil
 	})
 
 	done := make(chan os.Signal)
-	signal.Notify(done, os.Interrupt)
+	signal.Notify(done, os.Interrupt,syscall.SIGTERM ,syscall.SIGINT)
 
-	select {
-	case s := <-done:
-		log.Println("Received signal", s)
-		b.Stop()
-	}
+	
+		
 }
